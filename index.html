@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f2f2f2;
+    }
+
+    .calculator {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 15px;
+    }
+
+    .inputs {
+      grid-column: span 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input {
+      width: 60px;
+      height: 40px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .buttons {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      height: 50px;
+      font-size: 20px;
+      border: none;
+      border-radius: 8px;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      grid-column: span 2;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="inputs">
+      <input type="number" id="num1" value="2">
+      <span id="op">?</span>
+      <input type="number" id="num2" value="3">
+    </div>
+
+    <div class="buttons">
+      <button data-op="+">+</button>
+      <button data-op="-">-</button>
+      <button data-op="*">*</button>
+      <button data-op="/">/</button>
+      <button data-op="%">%</button>
+      <button data-op="^">xⁿ</button>
+    </div>
+
+    <div class="result" id="resultado">El resultado es: </div>
+  </div>
+
+  <script>
+    const operaciones = {
+      "+": (a, b) => a + b,
+      "-": (a, b) => a - b,
+      "*": (a, b) => a * b,
+      "/": (a, b) => b !== 0 ? a / b : "∞",
+      "%": (a, b) => a % b,
+      "^": (a, b) => a ** b
+    };
+
+    const botones = document.querySelectorAll("button");
+    const resultado = document.getElementById("resultado");
+    const num1 = document.getElementById("num1");
+    const num2 = document.getElementById("num2");
+    const opDisplay = document.getElementById("op");
+
+    botones.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const op = btn.dataset.op;
+        const a = parseFloat(num1.value);
+        const b = parseFloat(num2.value);
+
+        opDisplay.textContent = op;
+
+        const res = operaciones[op](a, b);
+        resultado.textContent = `El resultado es: ${res}`;
+      });
+    });
+  </script>
+</body>
+</html>
